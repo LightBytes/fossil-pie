@@ -263,8 +263,8 @@ mkdir -p ~/bin/ && cp gnuski ~/bin/
 cd - && rm -rf gnuski-0.3
 cat > $GAMES_DIR/gnuski.sh << EOF
 #!/bin/bash
+read -p "Press CTRL+C to quit" key
 while [ 1 ]; do
-  read -p "Press 'q' or CTRL+C to quit' key
   if [ "$key" == 'q' ]; then
     break
   fi
@@ -379,6 +379,24 @@ cat > $GAMES_DIR/"SeaBattle".sh << EOF
 EOF
 chmod +x $GAMES_DIR/"SeaBattle".sh
 
+# plonx
+cd $BUILD_ROOT
+curl -O -J -L https://web.archive.org/web/20080704073046/http://bilious.homelinux.org/~paxed/plonx/plonx-0.03.tar.gz
+tar -xvzf plonx-0.03.tar.gz && rm plonx-0.03.tar.gz
+cd plonx-0.03/ && make && mkdir -p ~/bin/ && mv plonx ~/bin/
+cd - && rm -rf plonx/
+cat > $GAMES_DIR/plonx.sh << EOF
+#! /bin/bash
+while [ 1 ]; do
+  read -p "Press 'q' or CTRL+C to quit" key
+  if [ "$key" == 'q' ]; then
+    break
+  fi
+  ~/bin/plonx
+done
+EOF
+chmod +x $GAMES_DIR/plonx.sh
+
 # n2048 - ncurses based 2048
 cd $BUILD_ROOT && git clone https://github.com/blindFS/n2048 && \
   cd n2048/ && make && mkdir -p ~/bin && mv ~/bin/2048 && cd - && rm -rf n2048
@@ -422,6 +440,11 @@ cd $BUILD_ROOT/astromenace && git pull && cmake . && make -j4 && \
   echo "sudo $GAMES_DIR/astromenace/astromenace  # needs root... dunno why" > $GAMES_DIR/astromenace.sh && \
   chmod +x $GAMES_DIR/astromenace.sh
 popd
+
+# plonx
+wget https://web.archive.org/web/20080704073046/http://bilious.homelinux.org/~paxed/plonx/plonx-0.03.tar.gz
+tar -xvzf plonx-0.03.tar.gz && rm plonx-0.03.tar.gz
+cd plonx-0.03/ && make 
 
 # secret maryo
 # pushd $(pwd)
