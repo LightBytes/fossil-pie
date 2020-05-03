@@ -12,17 +12,20 @@ rp_module_license="ISC"
 rp_module_section="exp"
 
 function depends_OpenClonk() {
-    sudo apt-get install -y libsdl2-dev libgles2-mesa-dev \
-        libopenal-dev libminiupnpc-dev libxrandr-dev
+    sudo apt-get install -y cmake git \
+        libsdl2-dev libgles2-mesa-dev \
+        libopenal-dev libminiupnpc-dev libxrandr-dev \
+        libtinyxml2-dev libglew-dev
 }
 
 # NOTE: requires ~500MB disk space
 function install_OpenClonk() {
     git clone https://github.com/openclonk/openclonk
     cd openclonk/
-    # TODO: build clonk
+    cmake . && make -j4 && sudo make install && \
+        cd - && rm -rf openclonk/
 }
 
 function configure_OpenClonk() {
-    
+
 }
